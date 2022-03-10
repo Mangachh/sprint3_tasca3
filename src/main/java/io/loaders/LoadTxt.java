@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 import io.IReadProperty;
@@ -17,14 +16,39 @@ import items.ItemBase;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/* He tenido ciertos problemas para guardar esto, más que nada por el diseño del txt.
+ * Al principio había optado por ponerl cada conjunto de items en una misma línea, aún así
+ * no me parecía limpio y, en caso de tener muchos items quedaba un poco feo.
+ * ej:
+   
+   name = nombre_floristeria
+   Arbre = (arbre_1, 25, 2, 577), (arbre_2, 25, 7, 2)
+   Decoracio = (decor_1, 25, 2, fusta), (decor_2, 14, 21, plastic)
+   ...
+
+ * Una vez había acabado de parsearlo todo y demás, pfff he pensao en hacerlo de una mejor manera
+ * 
+    name = nombre_floristeria
+    arbre = {
+        cerezo, 25.5(precio), 2(cantidad), 7.5 (altura)
+        naranjo, 27.87(precio), 7(cantidad), 7.8(altura)
+        }
+    decoracio = {
+        anilla, 25.6, 2, fusta
+        bola de discoteca, 25.65, 2, plastic
+        }
+    ...
+ * De esta manera no sólo queda más limpio, si no que me parece más fácil de parsear y demás.
+ * Obviamente, está sujeto a cambio, jajaja.
+/*
+
+*/
 public class LoadTxt implements ILoadFloristeria {
     private final String PATH_NAME = "txt_path";
     private final String NO_READ_CHAR = "#";
     private final String NAME_PREFIX = "name";
-    private final String ARBRE_PREFIX = "arbre";
-    private final String DEC_PREFIX = "decoracio";
-    private final String FLOR_PREFIX = "flor";
     private final String SEPARATION_CHAR = "=";
+    private final String SEPARATION_GROUP_CHAR = "}";
     private final byte ITEM_NAME = 0;
     private final byte ITEM_VALLUE = 1;
     private final byte ITEM_AMOUNT = 2;
@@ -51,23 +75,22 @@ public class LoadTxt implements ILoadFloristeria {
         try (Scanner reader = new Scanner(f)) {
             while (reader.hasNext()) {
                 line = reader.nextLine().trim();
-
-                // esto se puede mejorar de alguna manera...
+                
+                // si la linea está blanca o empieza con el comment continiuamos
                 if (line.isBlank() || line.startsWith(NO_READ_CHAR)) {
                     continue;
                 } else if (line.startsWith(NAME_PREFIX)) {
                     floristeria.setName(this.getNameFromFile(line));
-                } else if (line.startsWith(ARBRE_PREFIX)) {
-                    this.setItems(floristeria, line, Arbre.class);
-                } else if (line.startsWith(DEC_PREFIX)) {
-                    this.setItems(floristeria, line, Decoracio.class);
-                } else if (line.startsWith(FLOR_PREFIX)) {
-                    this.setItems(floristeria, line, Flor.class);
+                } else if (line.startsWith(Arbre.ITEM_ID)) {
+                    this.setItems(floristeria, reader, Arbre.class);
+                } else if (line.startsWith(Decoracio.ITEM_ID)) {
+                    this.setItems(floristeria, reader, Decoracio.class);
+                } else if (line.startsWith(Flor.ITEM_ID)) {
+                    this.setItems(floristeria, reader, Flor.class);
                 }
             }
 
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -75,11 +98,17 @@ public class LoadTxt implements ILoadFloristeria {
 
     }
 
-    private void setItems(final Floristeria floristeria, final String line, final Class<? extends ItemBase> clazz) {
-        ArrayList<String> itemRaw = this.separateValues(line);
+    private void setItems(final Floristeria floristeria, Scanner sc, final Class<? extends ItemBase> clazz){
+        String line = "";
+        while(sc.hasNextLine()){
+            //primero miramos si la línea es cierre
+            line = sc.nextLine();
 
-        for (String s : itemRaw) {
-            String[] values = s.split(",");
+            if(line.trim().equals(SEPARATION_GROUP_CHAR)){
+                return;
+            }
+
+            String[] values = line.split(",");
 
             ItemBase item = null;
             try {
@@ -102,10 +131,10 @@ public class LoadTxt implements ILoadFloristeria {
             }
 
             floristeria.addItem(item, item.getId());
+
         }
-
     }
-
+    
     private void setArbreHeight(final String height, Arbre arbre) {
         arbre.setHeight(Double.parseDouble(height));
     }

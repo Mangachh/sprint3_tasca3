@@ -4,14 +4,24 @@
 name = Floristeria de prueba
 
 # ahora aquí van los artículos, tal como lo tenemos montado no hace falta que esté en orden guardado y demás.
-# es más legibvle en el txt y en caso de meter cosas es más fácil así.
+# es más legible en el txt y en caso de meter cosas es más fácil así.
 # arbol -> nombre, precio, cantidad, altura
-arbre = (arbol_1, 25.45, 42, 2.15), (arbol_2, 13.21, 7, 1.10)
+Arbre ={
+    arbol_1, 25.45, 42, 2.15
+    arbol_2, 13.21, 7, 1.10
+}
 
 #decoracion -> nombre, precio, cantidad, tipo
-decoracio = (decor_1, 7.85, 2, plàstic), (decor_2, 25.85, 7, fusta)
+Decoracio = {
+    decor_1, 7.85, 2, plàstic
+    decor_2, 25.85, 7, fusta
+}
 
 #flor -> nombre, precio, cantidad, color
-flor = (flor_1, 2.15, 2, blau), (flor_2, 7.25, 7, marró), (rosa, 2.54, 123, vermella)
+Flor = {
+    flor_1, 2.15, 2, blau
+    flor_2, 7.25, 7, marró
+    rosa, 2.54, 123, vermella
+}
 
 #aquí irán los tickets :'(
