@@ -6,6 +6,8 @@ public abstract class ItemBase {
 	private double price;
 	private int quantity;
 	
+	public ItemBase() {};
+	
 	public ItemBase(final String name, double price) {
 		this.name = name;
 		this.price = price;
@@ -36,6 +38,9 @@ public abstract class ItemBase {
 		this.quantity = quantity;
 	}
 	
+	public String getId() {
+		return ITEM_ID;
+	}
 	
 	
 }

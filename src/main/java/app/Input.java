@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Input {
 	
-	private final static String HEAD = ">>";
+	private final static String HEAD = ">> ";
 	private final static Scanner sc = new Scanner(System.in);
 	
 	public static String getString() {		
@@ -28,6 +28,18 @@ public class Input {
 			}catch(Exception e) {
 				System.out.println("Entrada no vàlida. Només están permessos números enters");
 			}				
+		}
+	}
+	
+	public static int getPositiveInt() {
+		int input = -1;
+		while(true) {
+			input = getInt();
+			if(input > -1) {
+				return input;
+			}else {
+				System.out.println("Només s'accepten enters positius ó número 0");
+			}
 		}
 	}
 	
@@ -59,6 +71,19 @@ public class Input {
 	public static void getEnter() {
 		printHead();
 		sc.nextLine();		
+	}
+
+	public static double getDouble() {
+		double input = -1;
+		while(true) {
+			printHead();
+			try {
+				input = Double.parseDouble(sc.nextLine());
+				return input;
+			}catch(Exception e) {
+				System.out.println("Entrada no vàlida. Només están permessos números decimals");
+			}				
+		}
 	}
 	
 	

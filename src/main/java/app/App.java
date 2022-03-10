@@ -1,7 +1,5 @@
 package app;
 
-import menus.Print;
-
 public class App {
 
 	public static void main(String[] args) {

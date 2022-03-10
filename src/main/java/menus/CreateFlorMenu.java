@@ -2,6 +2,7 @@ package menus;
 
 import app.AppController;
 import app.Input;
+import app.Print;
 import items.Floristeria;
 
 public class CreateFlorMenu extends MenuBase {
@@ -34,11 +35,12 @@ public class CreateFlorMenu extends MenuBase {
 			p.printLine(TXT_NO_CREATION);
 		}else {
 			p.printLine(String.format(TXT_CREATION, f.getName()));
+			controller.setFloristeria(f);
 		}
 		
 		p.printLine("Presiona Enter per continuar");
 		Input.getEnter();
-		
+		controller.removeFromStack(this);		
 	}
 	
 	private Floristeria createFloristeria(final Print p) {

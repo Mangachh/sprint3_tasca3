@@ -1,4 +1,4 @@
-package menus;
+package app;
 
 public class Print {
 	public final int MENU_OFFSET = 1;
@@ -25,5 +25,15 @@ public class Print {
 	
 	public void printEmpty() {
 		System.out.println();
+	}
+	
+	public void printListLine(final String head, final String line) {
+		String formatted = String.format("%s%s", head, line);
+		System.out.println(formatted);
+	}
+	public void printEmptyLines(int amount) {
+		for(int i = 0; i < amount; i++) {
+			System.out.println();
+		}
 	}
 }
