@@ -1,5 +1,7 @@
 package items;
 
+import java.util.Locale;
+
 public class Flor extends ItemBase {
 	public static final String ITEM_ID = "Flor";
 	private String color;
@@ -22,6 +24,11 @@ public class Flor extends ItemBase {
 	@Override
 	public String getId(){
 		return Flor.ITEM_ID;
+	}
+	
+	@Override
+	public String toString(){
+		return String.format(Locale.ROOT, "%s, %f, %d, %s", this.name, this.price, this.quantity, this.color);
 	}
 
 }

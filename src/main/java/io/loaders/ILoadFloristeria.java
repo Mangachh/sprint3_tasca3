@@ -5,5 +5,5 @@ import items.Floristeria;
 
 public interface ILoadFloristeria {
     
-    Floristeria loadFloristeria(IReadProperty reader);
+    Floristeria loadFloristeria(final IReadProperty reader);
 }

@@ -55,4 +55,12 @@ public class Floristeria {
 	public void setName(final String name){
 		this.name = name;
 	}
+
+    public int getItemCount(String key) {
+        if(this.items.containsKey(key)){
+			return this.items.get(key).size();
+		}
+
+		return 0;
+    }
 }

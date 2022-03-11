@@ -1,5 +1,7 @@
 package items;
 
+import java.util.Locale;
+
 public class Decoracio extends ItemBase {
 	public static final String ITEM_ID = "Decoracio";
 	public static final String[] TIPUS_DEC = {"Fusta", "Plàstic"};
@@ -24,6 +26,13 @@ public class Decoracio extends ItemBase {
 	@Override
 	public String getId(){
 		return Decoracio.ITEM_ID;
+	}
+
+	@Override
+	public String toString(){
+		// utilizamos Locale.ROOT para que los decimales estén con un '.' (punto), así no fastidia para guardar
+		// TODO: quizás hacer un toString sólo para guardar?
+		return String.format(Locale.ROOT, "%s, %f, %d, %s", this.name, this.price, this.quantity, this.tipus);
 	}
 
 

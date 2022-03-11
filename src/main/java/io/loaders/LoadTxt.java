@@ -101,9 +101,10 @@ public class LoadTxt implements ILoadFloristeria {
     private void setItems(final Floristeria floristeria, Scanner sc, final Class<? extends ItemBase> clazz){
         String line = "";
         while(sc.hasNextLine()){
-            //primero miramos si la línea es cierre
+            
             line = sc.nextLine();
-
+            
+            //primero miramos si la línea es cierre
             if(line.trim().equals(SEPARATION_GROUP_CHAR)){
                 return;
             }
@@ -145,15 +146,7 @@ public class LoadTxt implements ILoadFloristeria {
 
     private void setFlorColor(final String color, Flor flor) {
         flor.setColor(color);
-    }
-
-    private ArrayList<String> separateValues(final String line) {
-        Pattern patter = Pattern.compile("\\(([^\\)]+)\\)");
-        Matcher m = patter.matcher(line);
-        ArrayList<String> matches = new ArrayList<String>();
-        m.results().forEach(s -> matches.add(s.group().replaceAll("[()]", "")));
-        return matches;
-    }
+    }    
 
     private String getNameFromFile(final String line) {
         String name = line.split(SEPARATION_CHAR)[1].trim();

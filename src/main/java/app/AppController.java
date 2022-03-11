@@ -32,6 +32,10 @@ public class AppController {
 			this.menus.peek().showMenu(print, this);
 			print.printEmptyLines(this.CLEAR_LINES);
 		}	
+
+		// de momento guardamos al salir
+		SaveLoad saver = new SaveLoad();
+		saver.saveFloristeria(this.floristeria);
 	}
 	
 	public Floristeria getFloristeria() {

@@ -7,6 +7,9 @@ import java.util.Properties;
 import items.Floristeria;
 import app.App;
 import io.loaders.ILoadFloristeria;
+import io.loaders.LoaderFactory;
+import io.savers.ISaveFloristeria;
+import io.savers.SaverFactory;
 
 public class SaveLoad implements IReadProperty {
 
@@ -24,6 +27,17 @@ public class SaveLoad implements IReadProperty {
 		}
 
 		return floris;
+	}
+
+	public void saveFloristeria(final Floristeria floristeria){
+		String saverType = readProperty(LOADER_HEAD);
+		
+		try{
+			ISaveFloristeria saver = new SaverFactory().getSaver(saverType);
+			saver.saveFloristeria(floristeria, this);
+		}catch(NullPointerException e){
+			System.out.println(e.getMessage());
+		}		
 	}
 
 	public String readProperty(final String property) {

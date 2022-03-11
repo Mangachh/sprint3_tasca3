@@ -1,5 +1,7 @@
 package items;
 
+import java.util.Locale;
+
 public class Arbre extends ItemBase {
 	public static final String ITEM_ID = "Arbre";
 	private double height;
@@ -22,6 +24,11 @@ public class Arbre extends ItemBase {
 	@Override
 	public String getId(){
 		return Arbre.ITEM_ID;
+	}
+
+	@Override
+	public String toString(){
+		return String.format(Locale.ROOT, "%s, %f, %d, %f", this.name, this.price, this.quantity, this.height);
 	}
 	
 }

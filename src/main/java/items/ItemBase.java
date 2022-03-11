@@ -2,9 +2,9 @@ package items;
 
 public abstract class ItemBase {
 	public static final String ITEM_ID = "Base";
-	private String name;
-	private double price;
-	private int quantity;
+	protected String name;
+	protected double price;
+	protected int quantity;
 	
 	public ItemBase() {};
 	
