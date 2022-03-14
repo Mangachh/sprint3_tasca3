@@ -8,8 +8,8 @@ public class Arbre extends ItemBase {
 	
 	public Arbre() {};
 	
-	public Arbre(String name, double price, double height) {
-		super(name, price);
+	public Arbre(String name, double price, int quantity, double height) {
+		super(name, price, quantity);
 		this.height = height;
 	}
 	

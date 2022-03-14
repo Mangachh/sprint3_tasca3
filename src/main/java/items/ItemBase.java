@@ -1,6 +1,6 @@
 package items;
 
-public abstract class ItemBase {
+public abstract class ItemBase implements Cloneable {
 	public static final String ITEM_ID = "Base";
 	protected String name;
 	protected double price;
@@ -8,10 +8,10 @@ public abstract class ItemBase {
 	
 	public ItemBase() {};
 	
-	public ItemBase(final String name, double price) {
+	public ItemBase(final String name, double price, int quantity) {
 		this.name = name;
 		this.price = price;
-		this.quantity = 0;
+		this.quantity = quantity;
 	}
 
 	public String getName() {
@@ -31,7 +31,7 @@ public abstract class ItemBase {
 	}
 
 	public int getQuantity() {
-		return quantity;
+		return this.quantity;
 	}
 
 	public void setQuantity(int quantity) {
@@ -40,6 +40,10 @@ public abstract class ItemBase {
 	
 	public String getId() {
 		return ITEM_ID;
+	}
+
+	public Object clone() throws CloneNotSupportedException{
+		return super.clone();
 	}
 	
 	

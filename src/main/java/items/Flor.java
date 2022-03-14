@@ -8,8 +8,8 @@ public class Flor extends ItemBase {
 	
 	public Flor() {};
 	
-	public Flor(String name, double price, final String color) {
-		super(name, price);
+	public Flor(String name, double price, int quantity, final String color) {
+		super(name, price, quantity);
 		this.color = color;		
 	}
 	

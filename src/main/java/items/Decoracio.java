@@ -10,8 +10,8 @@ public class Decoracio extends ItemBase {
 	
 	public Decoracio() {};
 	
-	public Decoracio(String name, double price, final String tipus) {
-		super(name, price);
+	public Decoracio(String name, double price, int quantity, final String tipus) {
+		super(name, price, quantity);
 		this.tipus = tipus;
 	}
 	

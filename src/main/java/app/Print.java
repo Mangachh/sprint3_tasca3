@@ -18,6 +18,20 @@ public class Print {
 			System.out.printf(format, i+1, options[i]);
 		}
 	}
+
+	public void printOptions(final String[] options, int columns){
+		String format = "%2d.- %s%5s";
+		for(int i = 0; i < options.length; i++){
+			if(i > 0 && i % columns == 0){
+				System.out.println();
+			}
+
+			System.out.print(String.format(format, i +1, options[i], ""));
+			if(i == options.length - 1){
+				System.out.println();
+			}
+		}
+	}
 	
 	public void printLine(final String toPrint) {
 		System.out.println(toPrint);
