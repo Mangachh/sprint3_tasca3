@@ -3,18 +3,16 @@ package io.loaders;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.concurrent.ExecutionException;
 
 import io.IReadProperty;
+import io.TxtUtils;
 import items.Arbre;
 import items.Decoracio;
 import items.Flor;
 import items.Floristeria;
 import items.ItemBase;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /* He tenido ciertos problemas para guardar esto, más que nada por el diseño del txt.
  * Al principio había optado por ponerl cada conjunto de items en una misma línea, aún así
@@ -44,98 +42,98 @@ import java.util.regex.Pattern;
 
 */
 public class LoadTxt implements ILoadFloristeria {
-    private final String PATH_NAME = "txt_path";
-    private final String NO_READ_CHAR = "#";
-    private final String NAME_PREFIX = "name";
-    private final String SEPARATION_CHAR = "=";
-    private final String SEPARATION_GROUP_CHAR = "}";
-    private final byte ITEM_NAME = 0;
-    private final byte ITEM_VALLUE = 1;
-    private final byte ITEM_AMOUNT = 2;
-
-    // estos tres los podemos agrupar de otra manera
-    private final byte ITEM_HEIGH = 3;
-    private final byte ITEM_COLOR = 3;
-    private final byte ITEM_MATERIAL = 3;
+    private TxtUtils txtUtils;
 
     @Override
     public Floristeria loadFloristeria(IReadProperty propReader) {
-        propReader.readProperty(this.PATH_NAME);
-        String line = "";
+        txtUtils = new TxtUtils();
 
         // vale, tenemos la ruta y demás.
-        String path = propReader.readProperty(PATH_NAME);
+        String path = propReader.readProperty(txtUtils.FLOR_PATH_NAME);
         File f = new File(System.getProperty("user.dir") + path);
-        Floristeria floristeria = new Floristeria();
+        Floristeria floristeria = new Floristeria();  
+        ItemBase item;      
+        String line;
 
         if (f.exists() == false) {
             return null;
         }
+        // la primeria línea es el nombre, igualmente miraremso a ver
+        try (Scanner reader = new Scanner(f, txtUtils.LOCALE)) {
+            line = reader.nextLine();
+            floristeria.setName(this.getNameFromLine(line));
 
-        try (Scanner reader = new Scanner(f)) {
-            while (reader.hasNext()) {
-                line = reader.nextLine().trim();
-                
-                // si la linea está blanca o empieza con el comment continiuamos
-                if (line.isBlank() || line.startsWith(NO_READ_CHAR)) {
-                    continue;
-                } else if (line.startsWith(NAME_PREFIX)) {
-                    floristeria.setName(this.getNameFromFile(line));
-                } else if (line.startsWith(Arbre.ITEM_ID)) {
-                    this.setItems(floristeria, reader, Arbre.class);
-                } else if (line.startsWith(Decoracio.ITEM_ID)) {
-                    this.setItems(floristeria, reader, Decoracio.class);
-                } else if (line.startsWith(Flor.ITEM_ID)) {
-                    this.setItems(floristeria, reader, Flor.class);
+            // ahora miraremos el tipo que es y demás
+            while(reader.hasNextLine()){
+                line = reader.nextLine();
+                item = this.getItemFromLine(line);
+                if(item != null){
+                    floristeria.addItem(item, item.getId());
                 }
+                
             }
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return null;
         }
 
         return floristeria;
-
     }
 
-    private void setItems(final Floristeria floristeria, Scanner sc, final Class<? extends ItemBase> clazz){
-        String line = "";
-        while(sc.hasNextLine()){
-            
-            line = sc.nextLine();
-            
-            //primero miramos si la línea es cierre
-            if(line.trim().equals(SEPARATION_GROUP_CHAR)){
-                return;
-            }
+    public ItemBase getItemFromLine(final String line) {
+        String[] data = line.split(txtUtils.VALUES_SEPARATOR);        
+        ItemBase item = null;
+        String type = data[txtUtils.ITEM_TYPE].trim();
 
-            String[] values = line.split(",");
-
-            ItemBase item = null;
-            try {
-                item = clazz.getConstructor().newInstance();
-            } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
-                    | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-                e.printStackTrace();
-                break;
-            }
-            item.setName(values[ITEM_NAME].trim());
-            item.setPrice(Double.parseDouble(values[ITEM_VALLUE].trim()));
-            item.setQuantity(Integer.parseInt(values[ITEM_AMOUNT].trim()));
-
-            if(item.getId().equals(Arbre.ITEM_ID)){
-                this.setArbreHeight(values[ITEM_HEIGH], (Arbre)item);
-            }else if(item.getId().equals(Decoracio.ITEM_ID)){
-                this.setDecoracioTipu(values[ITEM_MATERIAL], (Decoracio)item);
-            }else if(item.getId().equals(Flor.ITEM_ID)){
-                this.setFlorColor(values[ITEM_COLOR], (Flor)item);
-            }
-
-            floristeria.addItem(item, item.getId());
-
+        if(data.length != txtUtils.DATA_PER_LINE){
+            return null;
         }
+
+        if (type.equalsIgnoreCase(Arbre.ITEM_ID)) {
+            item = this.getNewParticularItem(Arbre.class);
+            this.setArbreHeight(data[txtUtils.ITEM_HEIGH], (Arbre) item);
+        } else if (type.equalsIgnoreCase(Decoracio.ITEM_ID)) {
+            item = this.getNewParticularItem(Decoracio.class);
+            this.setDecoracioTipu(data[txtUtils.ITEM_MATERIAL], (Decoracio) item);
+        } else if (type.equalsIgnoreCase(Flor.ITEM_ID)) {
+            item = this.getNewParticularItem(Flor.class);
+            this.setFlorColor(data[txtUtils.ITEM_COLOR], (Flor) item);
+        }
+
+        this.setSharedProperties(data, item);
+
+        return item;
     }
-    
+
+    private ItemBase getNewParticularItem(final Class<? extends ItemBase> clazz) {
+        ItemBase item;
+
+        try {
+            item = clazz.getConstructor().newInstance();
+        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+                | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return item;
+    }
+
+    private void setSharedProperties(final String[] data, final ItemBase item){
+        double price;
+        int amount;
+        
+        try{
+            price = Double.parseDouble(data[txtUtils.ITEM_VALLUE].trim());
+            amount = Integer.parseInt(data[txtUtils.ITEM_AMOUNT].trim());
+            item.setName(data[txtUtils.ITEM_NAME]);
+            item.setPrice(price);
+            item.setQuantity(amount);
+        }catch(Exception e){
+            System.err.println(e.getMessage());
+        }        
+    }
+
     private void setArbreHeight(final String height, Arbre arbre) {
         arbre.setHeight(Double.parseDouble(height));
     }
@@ -146,11 +144,16 @@ public class LoadTxt implements ILoadFloristeria {
 
     private void setFlorColor(final String color, Flor flor) {
         flor.setColor(color);
-    }    
+    }
 
-    private String getNameFromFile(final String line) {
-        String name = line.split(SEPARATION_CHAR)[1].trim();
-        return name;
+    private String getNameFromLine(final String line){
+        try{
+            return line.split(txtUtils.IDENTIF_CHAR)[1];
+        }catch(Exception e){
+            System.err.println(e.getMessage());
+            return "no name found";
+        }
+        
     }
 
 }

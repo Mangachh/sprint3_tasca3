@@ -1,7 +1,6 @@
 package items;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class Ticket {
@@ -40,13 +39,13 @@ public class Ticket {
     public String formattedTicket() {
         double total = 0;
         double price = 0;
-        String format_first = "%s -> %-35.5s\t%.2f";
-        String format_second = "\t\t quantity X %d\t%.2f";
+        String format_first = "%s -> %s (%.2f€)\n";
+        String format_second = "\t quantity X %d\t\t%.2f€\n";
         //String format = "%s-> %-35s X%d\t\t%.2f\n";
         String text = String.format(TICKET_HEADER, this.id);
         for (ItemBase b : items) {
-            //text += String.format(format, b.getId().toUpperCase(), b.getName(), b.getQuantity(), b.getPrice());
             text += String.format(format_first, b.getId().toUpperCase(), b.getName(), b.getPrice());
+            // esto lo podría tener el item base
             price = b.getPrice() * b.getQuantity();
 
             text += String.format(format_second, b.getQuantity(), price);
@@ -54,10 +53,11 @@ public class Ticket {
             total += price;
         }
 
-        text += String.format("\n\tTOTAL: %.2f", total);
+        text += String.format("\n\tTOTAL: %.2€f", total);
 
         return text;
     }
+
 
     public int getItemsSize(){
         return this.items.size();

@@ -1,15 +1,4 @@
-name = Floristeria Creada en Consola
-Decoracio = {
-	alfombra fea, 25.340000, 7,   Fusta
-	pepinillo gigante, 25.32, 8, Plàstic
-}
-Flor = {
-	Rosa pocha, 25.360000, 22,          Casi roja
-	Girasol, 25.650000, 7,          Amarillo
-	florecilla 2, 25.650000, 12,  purpura
-}
-Arbre = {
-	Arbol del destino, 25.650000, 12, 2.450000
-	Arbol del conocimiento, 21.444, 7, 12.54
-	Arbol de la vida, 25.7777, 12, 58
-}
+name =  Creada en consola II
+Decoracio, 3, 2.000000, 1,  Plàstic
+Arbre, consloa 12, 2.000000, 5, 2.000000
+Arbre, 2, 3.000000, 5, 2.000000
