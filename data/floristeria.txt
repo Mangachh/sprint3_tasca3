@@ -1,4 +1,0 @@
-name =  Creada en consola II
-Decoracio, 3, 2.000000, 1,  Plàstic
-Arbre, consloa 12, 2.000000, 5, 2.000000
-Arbre, 2, 3.000000, 5, 2.000000

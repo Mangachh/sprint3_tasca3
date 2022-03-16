@@ -19,12 +19,20 @@ public class Ticket {
     }
 
     public void addItem(final ItemBase item) {
-        this.items.add(item);
-
+        if(item != null){
+            this.items.add(item);
+        }
     }
 
     public long getId() {
         return this.id;
+    }
+
+    public void setId(long id){
+        this.id = id;
+        if(id >= Ticket.ticketId){
+            Ticket.ticketId = id + 1;
+        }
     }
 
     public double getTotalPrice() {
@@ -39,8 +47,8 @@ public class Ticket {
     public String formattedTicket() {
         double total = 0;
         double price = 0;
-        String format_first = "%s -> %s (%.2f€)\n";
-        String format_second = "\t quantity X %d\t\t%.2f€\n";
+        String format_first = "%s -> %s (%.2f Euros)\n";
+        String format_second = "\t quantity X %d\t\t%.2f Euros\n";
         //String format = "%s-> %-35s X%d\t\t%.2f\n";
         String text = String.format(TICKET_HEADER, this.id);
         for (ItemBase b : items) {
@@ -53,7 +61,7 @@ public class Ticket {
             total += price;
         }
 
-        text += String.format("\n\tTOTAL: %.2€f", total);
+        text += String.format("\n\tTOTAL: %.2f Euros", total);
 
         return text;
     }
@@ -66,6 +74,8 @@ public class Ticket {
     public ItemBase getItemByIndex(int index){
         return this.items.get(index);
     }
+
+
 
 
 }

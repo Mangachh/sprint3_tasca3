@@ -46,14 +46,14 @@ public class Floristeria {
 	}
 
 	/**
-	 * Devuelve una COPIA de la lista de items. Las operaciones de insertar y eliminar han de hacerse con los 
+	 * Las operaciones de insertar y eliminar han de hacerse con los 
 	 * propios métodos {@link #addItem(ItemBase, String)} y {@link #removeItem(String, ItemBase)} 
 	 * @param id
 	 * @return
 	 */
 	public List<ItemBase> getItemsFromID(final String id) {
 		if (this.items.containsKey(id)) {
-			return new ArrayList<ItemBase>(this.items.get(id));
+			return this.items.get(id);
 		}
 		return null;
 	}
@@ -89,8 +89,23 @@ public class Floristeria {
 		this.tickets.add(ticket);
 	}
 
+	public int getTicketCount(){
+		return this.tickets.size();
+	}
 	public Ticket getTicketByIndex(int index){
 		return this.tickets.get(index);
+	}
+
+	public void setTicketList(final List<Ticket> tickets){
+		this.tickets = tickets;
+
+		if(this.tickets == null){
+			this.tickets = new ArrayList<Ticket>();
+		}
+	}
+
+	public List<Ticket> getTickets(){
+		return this.tickets;
 	}
 
 	public ItemBase getItemByName(final String name){
@@ -116,5 +131,7 @@ public class Floristeria {
 
 		return null;
 	}
+
+
 
 }

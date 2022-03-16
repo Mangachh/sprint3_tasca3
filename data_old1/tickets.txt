@@ -1,0 +1,12 @@
+1 = {
+	Decoracio, pestiño, 2.000000, 1, Plàstic
+	Arbre, consloa 12, 2.000000, 5, 2.000000
+	Arbre, lolipoli, 3.000000, 5, 2.000000
+}
+2 = {
+	Flor, girasol, 2.020000, 1, roja
+}
+3 = {
+	Arbre, papanaita, 3.000000, 2, 2.000000
+	Arbre, cerezo en flor, 2.000000, 2, 2.000000
+}

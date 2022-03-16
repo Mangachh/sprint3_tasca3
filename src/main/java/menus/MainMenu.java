@@ -10,6 +10,9 @@ public class MainMenu extends MenuBase {
 			"Ticket de compra", "Historic de compres", "Total de compres",
 			"Sortir de l'aplicació" };
 
+	private final String NO_FLOR = "Benvingud@! No existeix una floristeria. Si us plau, seleccioni la opció adient per tal de crear-ne una";
+
+	private final String SI_FLOR = "Benvigud@ a la floristeria %s! Seleccioni una opció:";
 	// se puede hacer con un enum, pero no me acaban de gustar los enums de java...
 	private final int OPTION_CREATE = 0;
 	private final int OPTION_ADD_ITEM = 1;
@@ -27,10 +30,16 @@ public class MainMenu extends MenuBase {
 
 	@Override
 	public void showMenu(final Print p, final AppController controller) {		
-		int option = -1;
+		int option = -1;	
 
 		p.printHeader(this.menuHeader);
 
+		if(controller.getFloristeria().getName() == null){
+			p.printLine(this.NO_FLOR);
+		}else{
+			p.printLine(String.format(this.SI_FLOR, controller.getFloristeria().getName()));
+		}
+		p.printEmpty();
 		p.printOptions(options);
 		option = Input.getIntInBetween(p.MENU_OFFSET, options.length) - p.MENU_OFFSET;
 		MenuBase next = this.fullMenuByNum(option);
@@ -55,9 +64,9 @@ public class MainMenu extends MenuBase {
 		case OPTION_TICKET:
 			return new CreateTicket();
 		case OPTION_HISTORIC:
-			break;
+			return new ShowTickets();
 		case OPTION_TOTAL:
-			break;
+			return new TotalTickets();
 		case OPTION_EXIT:
 			break;
 		}
