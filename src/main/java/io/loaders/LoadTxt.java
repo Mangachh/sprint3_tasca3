@@ -55,7 +55,7 @@ public class LoadTxt implements ILoadFloristeria, ILoadTickets {
                 line = reader.nextLine();
                 item = this.getItemFromLine(line);
                 if(item != null){
-                    floristeria.addItem(item, item.getId());
+                    floristeria.addItem(item);
                 }
                 
             }

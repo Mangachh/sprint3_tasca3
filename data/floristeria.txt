@@ -2,5 +2,6 @@ name = Creada en consola II
 Decoracio, plasta inmensa, 2.000000, 7, Plàstic
 Decoracio, miniatura, 2.150000, 12, Plàstic
 Flor, margarita, 2.870000, 2, blanca i groga
+Flor, flor de cönsolà, 2.450000, 2, púrpura
 Arbre, cerezo en flor, 2.000000, 1, 2.000000
 Arbre, papanaita, 3.000000, 3, 2.000000

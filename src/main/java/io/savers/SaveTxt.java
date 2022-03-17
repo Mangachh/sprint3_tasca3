@@ -3,6 +3,7 @@ package io.savers;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import io.IReadProperty;
@@ -27,6 +28,7 @@ public class SaveTxt implements ISaveFloristeria, ISaveTickets {
     public void saveFloristeria(final Floristeria floristeria, final IReadProperty reader) {
         File f = this.fileFromPath(this.txtUtils.FLOR_PATH_NAME, reader);
         String data;
+        byte[] bytes;
         
         try{
             // miramos que todo exista
@@ -43,7 +45,8 @@ public class SaveTxt implements ISaveFloristeria, ISaveTickets {
             for(String key: keys){
                 for(ItemBase item: floristeria.getItemsFromID(key)){
                     data = String.format("%s, %s", key, item.toString().trim());
-                    stream.println(data);
+                    bytes = data.getBytes(StandardCharsets.UTF_8);
+                    stream.println(new String(bytes, StandardCharsets.UTF_8));
                 }
             }
 

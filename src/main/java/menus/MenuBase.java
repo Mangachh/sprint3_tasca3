@@ -3,6 +3,11 @@ package menus;
 import app.AppController;
 import app.Print;
 
+/**
+ * Clase básica de los menú. Tiene los valores de sí y no así como un header.
+ * Realmente lo podríamos haber hecho con una interfaz o así, pero ya lo tenía
+ * todo aplicado y preferí dejarlo de esta manera. 
+ */
 public abstract class MenuBase {
 	
 	protected String menuHeader;

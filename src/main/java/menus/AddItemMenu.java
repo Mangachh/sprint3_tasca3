@@ -9,6 +9,14 @@ import items.Flor;
 import items.ItemBase;
 import items.ItemFactory;
 
+/**
+ * Menú para añadir items en una floristeria.
+ * Como todos los items vienen de la misma clase {@link ItemBase} metemos los datos en dos partes:
+ * Primero metemos los datos comunes (los que vienen de la clase padre) y luego
+ * miramos qué item queremos crear y metemos los datos de ese item.
+ * Es cierto que podríamos haber hecho estos subsistemas en otra clase (por ejemplo meter la entrada de cada clase en diferentes archivos)
+ * pero me parecía más sencillo dejarlo así.
+ */
 public class AddItemMenu extends MenuBase{
 	private String TXT_NAME = "Introdueix el nom del producte:";
 	private String TXT_PRICE = "Introdueix el preu del producte:";
@@ -31,7 +39,7 @@ public class AddItemMenu extends MenuBase{
 			ItemBase item = new ItemFactory().generateItem(optionId);
 			this.setSharedData(item, p);		
 			this.setParticularData(item, p, optionId);
-			controller.getFloristeria().addItem(item, optionId);
+			controller.getFloristeria().addItem(item);
 			
 			p.printLine(TXT_ANOTHER);
 			inMenu = Input.isInputYesValue(VALUE_YES, VALUE_NO);
@@ -42,9 +50,9 @@ public class AddItemMenu extends MenuBase{
 		
 	}
 	
-	/* TODO: Todo esto lo podríamos meter en diferentes clases y llamarlas cuando sea necesario.
-	 * Así podríamos aprovechar el mismo código para modificar los items. Sin embargo como
-	 * el ejercicio no pide modificar los items es complicar un poco el código (por ahora)
+	/** 
+	 * Introducte los datos de las clases hijas {@link Arbre}, {@link Decoracio}, {@link Flor}
+	 * 
 	 */
 	private void setParticularData(ItemBase item, final Print p, final String optionID) {
 		if(optionID.equals(Arbre.ITEM_ID)) {
@@ -56,6 +64,11 @@ public class AddItemMenu extends MenuBase{
 		}
 	}
 	
+	/**
+	 * Introduce los datos de la clase {@link Flor}
+	 * @param item -> item a los que meter datos
+	 * @param p	   -> clase de printeo
+	 */
 	private void setDecoracioData(Decoracio item, Print p) {
 		p.printLine(TXT_SEL_TIPUS);	
 		int option = -1;
@@ -68,25 +81,52 @@ public class AddItemMenu extends MenuBase{
 		item.setTipus(Decoracio.TIPUS_DEC[option]);		
 	}
 
+
+	/**
+	 * Introduce los datos de la clase padre {@link ItemBase}
+	 * @param item -> item a que meter los datos
+	 * @param p	   -> printeo
+	 */
 	private void setSharedData(ItemBase item, final Print p) {
 		p.printLine(TXT_NAME);
 		item.setName(Input.getString());
+		p.printEmpty();
+
 		p.printLine(TXT_PRICE);
-		item.setPrice(Input.getDouble());		
+		item.setPrice(Input.getDouble());	
+		p.printEmpty();
+
 		p.printLine(TXT_AMOUNT);
 		item.setQuantity(Input.getPositiveInt());
+		p.printEmpty();
 	}
 	
+	/**
+	 * Setea los datos de la clase {@link Arbre}
+	 * @param arbre
+	 * @param p
+	 */
 	private void setArbreData(Arbre arbre, final Print p) {
 		p.printLine(TXT_ALCADA);
 		arbre.setHeight(Input.getDouble());
 	}
 	
+	/**
+	 * Setea los datos de la clase {@link Flor}
+	 * @param flor
+	 * @param p
+	 */
 	private void setFlorData(Flor flor, final Print p) {
 		p.printLine(TXT_COLOR);
 		flor.setColor(Input.getString());
 	}
 	
+	/**
+	 * Devuelve la opción de {@link #options} metida por input.
+	 * @param p
+	 * @param options
+	 * @return
+	 */
 	private String selectOption(final Print p, final String[] options) {
 		p.printOptions(options);
 		int selection = Input.getIntInBetween(p.MENU_OFFSET, options.length);

@@ -5,7 +5,11 @@ import app.Input;
 import app.Print;
 import items.Floristeria;
 
-public class CreateFlorMenu extends MenuBase {
+/**
+ * Menu para crear una floristeria nueva.
+ * Si ya existe una, la borra y la sustituye por esta
+ */
+public class CreateFloristeriaMenu extends MenuBase {
 	
 	private String menuHeader = "Creació floristeria";
 	private final String TXT_NAME = "Introdueixi el nóm de la nova floristeria:";
@@ -20,12 +24,13 @@ public class CreateFlorMenu extends MenuBase {
 		p.printHeader(this.menuHeader);
 		Floristeria f = null;
 		
-		if(controller.getFloristeria() == null) {
+		if(controller.getFloristeria().getName() == null) {
 			f = this.createFloristeria(p);
 		}else {
 			p.printLine(TXT_ALREADY_EXIST);
 			p.printLine(TXT_CONTINUE);
-			
+			p.printEmpty();
+
 			if(Input.isInputYesValue(VALUE_YES, VALUE_NO)) {
 				f = this.createFloristeria(p);
 			}
@@ -43,10 +48,18 @@ public class CreateFlorMenu extends MenuBase {
 		controller.removeFromStack(this);		
 	}
 	
+	/**
+	 * Menu para crear la floristeria
+	 * @param p -> printeo
+	 * @return  -> nueva floristeria
+	 */
 	private Floristeria createFloristeria(final Print p) {
 		p.printLine(this.TXT_NAME);
 		String name = Input.getString();
+		p.printEmpty();
+
 		p.printLine(String.format(this.TXT_NAME_SELECTED, name));
+		p.printEmpty();
 		p.printLine(this.TXT_CONTINUE);
 		
 		if(Input.isInputYesValue(VALUE_YES, VALUE_NO)) {

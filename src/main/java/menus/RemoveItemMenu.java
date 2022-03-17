@@ -5,6 +5,10 @@ import app.Input;
 import app.Print;
 import items.ItemBase;
 
+/**
+ * Menú para quitar un elemento. Primero seleccionamos el tipo de elemnto y luego
+ * el elemento que se muestra.
+ */
 public class RemoveItemMenu extends MenuBase{
 
     public RemoveItemMenu(){
@@ -18,7 +22,7 @@ public class RemoveItemMenu extends MenuBase{
         ItemBase toRemove = itemMenu.getItemFromOptions(p, controller, true);
 
         if(toRemove != null){
-            controller.getFloristeria().removeItem(toRemove.getId(), toRemove);            
+            controller.getFloristeria().removeItem(toRemove);            
         }else{
             controller.removeFromStack(this);
         }

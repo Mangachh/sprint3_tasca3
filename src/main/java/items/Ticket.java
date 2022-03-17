@@ -3,21 +3,34 @@ package items;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase que almacena una serie de items para hacer un ticket
+ */
 public class Ticket {
 
     private List<ItemBase> items;
+    /**
+     * Header para los tickets, lo pongo aquí para aprovehcar
+     */
     private final String TICKET_HEADER = "Ticket número: %d\n";
 
     // usamos esta ñapa para no pensar mucho...
     private static long ticketId = 0;
     private long id;
 
+    /**
+     * Constructor
+     */
     public Ticket() {
         this.id = ticketId;
         ticketId++;
         this.items = new ArrayList<ItemBase>();
     }
 
+    /**
+     * Añade un item al ticket
+     * @param item  -> item que añadir al ticket
+     */
     public void addItem(final ItemBase item) {
         if(item != null){
             this.items.add(item);
@@ -35,6 +48,11 @@ public class Ticket {
         }
     }
 
+    /**
+     * Devuelve el precio total del ticket. 
+     * Hemos decicido calcularlo en vez de guardarlo en una variable.
+     * @return
+     */
     public double getTotalPrice() {
         double total = 0;
         for (ItemBase it : items) {
@@ -44,6 +62,10 @@ public class Ticket {
         return total;
     }
 
+    /**
+     * Formatea el ticket para la impresión.
+     * @return -> ticket formateado
+     */
     public String formattedTicket() {
         double total = 0;
         double price = 0;

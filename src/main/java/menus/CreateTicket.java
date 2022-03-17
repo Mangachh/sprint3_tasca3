@@ -6,6 +6,9 @@ import app.Print;
 import items.ItemBase;
 import items.Ticket;
 
+/**
+ * Menú para la creación de tickets
+ */
 public class CreateTicket extends MenuBase {
 
     private final String TXT_QUANTITAT = "Introdueixi la quantitat d'ítems a afegir al ticket.";
@@ -51,7 +54,7 @@ public class CreateTicket extends MenuBase {
             inMenu = Input.isInputYesValue(this.VALUE_YES, this.VALUE_NO);
         }
 
-        // imprimimos ticket
+        // preguntamos si queremos aceptar el ticket e imprimos en ese caso
         p.printEmptyLines(10);
 
         if(ticket.getItemsSize() > 0){
@@ -70,6 +73,6 @@ public class CreateTicket extends MenuBase {
         p.printLine("Presioni Enter per continuar...");
         Input.getEnter();
         controller.removeFromStack(this);
-    }
+    }   
 
 }

@@ -3,7 +3,10 @@ package app;
 import java.util.Scanner;
 
 /**
- * Clase para los inputs de consola
+ * Clase para los inputs de consola.
+ * OJU! no pilla para nada los char utf-8 y demás.
+ * Tiene pinta que es por culpa de la app consola más que 
+ * del código.
  */
 public class Input {
 	
@@ -124,7 +127,5 @@ public class Input {
 				System.out.println("Entrada no vàlida. Només están permessos números decimals");
 			}				
 		}
-	}
-	
-	
+	}	
 }

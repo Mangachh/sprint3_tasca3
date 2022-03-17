@@ -7,6 +7,9 @@ import app.Input;
 import app.Print;
 import items.Ticket;
 
+/**
+ * Menú que imprime por pantalla el total de vendas
+ */
 public class TotalTickets extends MenuBase {
 
     public TotalTickets(){

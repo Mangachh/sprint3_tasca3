@@ -9,7 +9,9 @@ import app.Print;
 import items.Floristeria;
 import items.ItemBase;
 
-// usaremos esto para diferentes menús
+/**
+ * Submenú para seleccionar items
+ */
 public class SelectItemSubMenu {
 
     private final String submenuHeader = "Selecció d'ítem";
@@ -18,6 +20,14 @@ public class SelectItemSubMenu {
     private final String TXT_NO_VALUE = "no_value";
     private final int NO_VALUE = -1;
 
+    /**
+     * Muestra los items en una lista numerada y a través del input del user
+     * devuelve uno
+     * @param p           -> printeo
+     * @param controller  -> controllador de app
+     * @param showFull    -> mostrar todos los items (true) ó sólo los que tienen stock(false)?
+     * @return            -> item seleccionado
+     */
     public ItemBase getItemFromOptions(final Print p, final AppController controller, boolean showFull) {
         ItemBase item = null;
         int option = -1;
@@ -41,6 +51,12 @@ public class SelectItemSubMenu {
         return item;
     }
 
+    /**
+     * Selecciona una key del menú de keys de consola
+     * @param options  -> keys a pasar
+     * @param p        -> clase de printeo
+     * @return         -> valor de la key
+     */
     private String selectKeyFromMenu(final String[] options, final Print p) {
         int input = -1;
         String key = TXT_NO_VALUE;
@@ -53,6 +69,13 @@ public class SelectItemSubMenu {
         return key;
     }
 
+    /**
+     * Devuelve el index de un item que se muestra en la consola
+     * @param base      -> lista de items a mostrar y seleccionar
+     * @param p         -> clase de printeo
+     * @param showFull  -> mostrar todos los items (true) ó sólo los que tienen stock(false)?
+     * @return
+     */
     private int getItemIndex(final List<ItemBase> base, final Print p, boolean showFull) {
         String[] itemsNames;
         int input = this.NO_VALUE;
@@ -88,10 +111,16 @@ public class SelectItemSubMenu {
                 names.add(i.getName());
             }
         }
-
         return names;
     }
 
+    /**
+     * Opciones de las keys de una floristeria. Si, por ejmeplo, sólo tenemos items Arbol y Decoració, 
+     * devolverá esas keys. De esta manera, en caso de querer meter más tipos de items no debemos
+     * tocar nada de aquí
+     * @param flor -> floristeria
+     * @return     -> keys existentes
+     */
     private String[] typeOptions(final Floristeria flor) {
         ArrayList<String> options = new ArrayList<String>();
 

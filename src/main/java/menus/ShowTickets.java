@@ -5,6 +5,9 @@ import app.Input;
 import app.Print;
 import items.Floristeria;
 
+/**
+ * Menú que imprime por pantalla todos los tickets de la floristeria
+ */
 public class ShowTickets extends MenuBase {
 
     public ShowTickets(){
