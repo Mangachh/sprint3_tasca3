@@ -1,4 +1,4 @@
-package io;
+package io.utils;
 
 /** 
  * Archivo con varias constantes para el guardado-carga de los datos en un txt.

@@ -35,6 +35,8 @@ public class SaveLoad implements IReadProperty {
 	 */
 	public static final String LOADER_TXT = "txt";
 
+	public static final String LOADER_SQL = "sql";
+
 	/**
 	 * Factoria de carga
 	 */

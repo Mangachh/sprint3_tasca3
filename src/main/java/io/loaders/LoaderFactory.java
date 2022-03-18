@@ -23,6 +23,8 @@ public class LoaderFactory {
     public ILoadFloristeria getFloristeria(final String type){
         if(type.equalsIgnoreCase(SaveLoad.LOADER_TXT)){
             return new LoadTxt();
+        }else if(type.equalsIgnoreCase(SaveLoad.LOADER_SQL)){
+            return new LoadSql();
         }
         return null;
     }
@@ -36,6 +38,8 @@ public class LoaderFactory {
     public ILoadTickets getTickets(final String type){
         if(type.equalsIgnoreCase(SaveLoad.LOADER_TXT)){
             return new LoadTxt();
+        }else if(type.equalsIgnoreCase(SaveLoad.LOADER_SQL)){
+            return new LoadSql();
         }
         return null;
     }

@@ -10,7 +10,7 @@ public class Decoracio extends ItemBase {
 	/**
 	 * Tipos de material para la decoración
 	 */
-	public static final String[] TIPUS_DEC = {"Fusta", "Plàstic"};
+	public static final String[] TIPUS_DEC = {"Fusta", "Plastic"};
 	
 	private String tipus;
 	

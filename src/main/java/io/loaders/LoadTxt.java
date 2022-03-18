@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Scanner;
 
 import io.IReadProperty;
-import io.TxtUtils;
 import io.loaders.interfaces.ILoadFloristeria;
 import io.loaders.interfaces.ILoadTickets;
+import io.utils.TxtUtils;
 import items.Arbre;
 import items.Decoracio;
 import items.Flor;
