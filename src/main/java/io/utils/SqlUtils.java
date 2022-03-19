@@ -1,5 +1,11 @@
 package io.utils;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.DriverManager;
+
+import io.IReadProperty;
+
 public class SqlUtils {
     
     public final String SQL_URL_PREFIX = "jdbc:";
@@ -22,6 +28,20 @@ public class SqlUtils {
     public final int VW_POS_AMOUNT = 7;
     public final int VW_POS_TICKET = 8;
 
+    public Connection getConnection(final IReadProperty reader) throws SQLException{
+        String url = this.SQL_URL_PREFIX + reader.readProperty(this.SQL_FILE_PATH);
+        String name = reader.readProperty(this.SQL_FILE_USERNAME);
+        String pass = reader.readProperty(this.SQL_FILE_PASS);
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection(url, name, pass);
+            return con;
+        }catch(ClassNotFoundException e){
+            System.err.println(e.getMessage());
+        }
+        return null;
+    }
     
 
 }

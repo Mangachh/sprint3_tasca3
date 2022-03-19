@@ -53,22 +53,16 @@ public class LoadSql implements ILoadFloristeria, ILoadTickets {
 
     @Override
     public List<Ticket> loadTickets(IReadProperty reader) {
-        String url = utils.SQL_URL_PREFIX + reader.readProperty(utils.SQL_FILE_PATH);
-        String name = reader.readProperty(utils.SQL_FILE_USERNAME);
-        String pass = reader.readProperty(utils.SQL_FILE_PASS);
         String ticketSelect = reader.readProperty(utils.SQL_FILE_VIEW_TICKET);
         List<Ticket> tickets = null;
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection(url, name, pass);
+            Connection con = this.utils.getConnection(reader);
             Statement statement = con.createStatement();
 
             ResultSet result = statement.executeQuery(ticketSelect);            
             tickets = this.loadTickets(result);              
             
             con.close();
-        }catch (ClassNotFoundException e) {
-            System.err.println(e.getMessage());
         }catch (SQLException e) {
             System.err.println(e.getMessage());
         }
@@ -79,15 +73,11 @@ public class LoadSql implements ILoadFloristeria, ILoadTickets {
     @Override
     public Floristeria loadFloristeria(IReadProperty reader) {
         Floristeria floristeria = null;
-        String url = utils.SQL_URL_PREFIX + reader.readProperty(utils.SQL_FILE_PATH);
-        String name = reader.readProperty(utils.SQL_FILE_USERNAME);
-        String pass = reader.readProperty(utils.SQL_FILE_PASS);
         String itemSelect = reader.readProperty(utils.SQL_FILE_VIEW_STOCK);
         String florisSelect = reader.readProperty(utils.SQL_FILE_NAME_SELECT);
 
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection(url, name, pass);
+            Connection con = utils.getConnection(reader);
             Statement statement = con.createStatement();
 
             // hacemos la búsqueda del nombre
@@ -99,8 +89,6 @@ public class LoadSql implements ILoadFloristeria, ILoadTickets {
             this.addItems(result, floristeria);
             // cerramos al acabar
             con.close();
-        }catch (ClassNotFoundException e) {
-            System.err.println(e.getMessage());
         }catch (SQLException e) {
             System.err.println(e.getMessage());
         }

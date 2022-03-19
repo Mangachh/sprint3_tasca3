@@ -97,6 +97,10 @@ public class Ticket {
         return this.items.get(index);
     }
 
+    public List<ItemBase> getItemsCopy(){
+        return new ArrayList<ItemBase>(this.items);
+    }
+
 
 
 

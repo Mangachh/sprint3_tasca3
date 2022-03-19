@@ -19,6 +19,8 @@ public class SaverFactory {
     public ISaveFloristeria getFloristeriaSaver(final String type){
         if(type.equalsIgnoreCase(SaveLoad.LOADER_TXT)){
             return new SaveTxt();
+        }else if(type.equalsIgnoreCase(SaveLoad.LOADER_SQL)){
+            return new SaveSql();
         }
         return null;
     }
@@ -31,6 +33,8 @@ public class SaverFactory {
     public ISaveTickets getTicketsSaver(final String type){
         if(type.equalsIgnoreCase(SaveLoad.LOADER_TXT)){
             return new SaveTxt();
+        }else if(type.equalsIgnoreCase(SaveLoad.LOADER_SQL)){
+            return new SaveSql();
         }
         return null;
     }
