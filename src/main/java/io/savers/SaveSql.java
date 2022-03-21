@@ -190,7 +190,7 @@ public class SaveSql implements ISaveFloristeria, ISaveTickets {
 
     private void setDecoraciQuery(final PreparedStatement insertStament, final Decoracio dec) throws SQLException {
         insertStament.setNull(3, Types.DOUBLE);
-        insertStament.setString(4, dec.getTipus());
+        insertStament.setString(4, dec.getMaterial());
         insertStament.setString(5, null);
     }
 

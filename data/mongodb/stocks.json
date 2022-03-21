@@ -1,0 +1,47 @@
+[
+	{
+		"nom": "flor_1",
+		"tipus": "Flor",
+		"amount": 7,
+		"price": 2.45,
+		"color": "vermell"
+	},
+	{
+		"nom": "flor_2",
+		"tipus": "Flor",
+		"amount": 4,
+		"price": 1.66,
+		"color": "blau"
+	},
+	{
+		"nom": "dec_1",
+		"tipus": "Decoracio",
+		"amount": 12,
+		"price": 4.85,
+		"material": "Plastic"
+	},
+	{
+		"nom": "dec_2",
+		"tipus": "Decoracio",
+		"amount": 1,
+		"price": 2.45,
+		"material": "Fusta"
+	},
+	{
+		"nom": "arbre_1",
+		"tipus": "Arbre",
+		"amount": 6,
+		"price": 2.65,
+		"alcada": 3.24
+	},
+	{
+		"nom": "arbre_2",
+		"tipus": "Arbre",
+		"amount": 2,
+		"price": 4.85,
+		"alcada": 0.54
+	}	
+] 
+
+
+

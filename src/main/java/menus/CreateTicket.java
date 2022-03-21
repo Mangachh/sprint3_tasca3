@@ -37,6 +37,7 @@ public class CreateTicket extends MenuBase {
                 amount = Input.getIntInBetween(1, item.getQuantity());
                 // cambiamos la cantidad en el stock
                 item.setQuantity(item.getQuantity() - amount);
+                
                 // clonamos y ponemos la cantidad al nuevo objeto
                 try {
                     clonedItem = (ItemBase) item.clone();

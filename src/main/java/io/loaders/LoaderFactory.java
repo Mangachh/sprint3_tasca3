@@ -25,6 +25,8 @@ public class LoaderFactory {
             return new LoadTxt();
         }else if(type.equalsIgnoreCase(SaveLoad.LOADER_SQL)){
             return new LoadSql();
+        }else if(type.equalsIgnoreCase(SaveLoad.LOADER_MONGO)){
+            return new LoadMongo();
         }
         return null;
     }
@@ -40,6 +42,8 @@ public class LoaderFactory {
             return new LoadTxt();
         }else if(type.equalsIgnoreCase(SaveLoad.LOADER_SQL)){
             return new LoadSql();
+        }else if(type.equalsIgnoreCase(SaveLoad.LOADER_MONGO)){
+            return new LoadMongo();
         }
         return null;
     }

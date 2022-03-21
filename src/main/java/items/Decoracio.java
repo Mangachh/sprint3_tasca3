@@ -10,9 +10,9 @@ public class Decoracio extends ItemBase {
 	/**
 	 * Tipos de material para la decoración
 	 */
-	public static final String[] TIPUS_DEC = {"Fusta", "Plastic"};
+	public static final String[] MATERIAL_DEC = {"Fusta", "Plastic"};
 	
-	private String tipus;
+	private String material;
 	
 	/**
 	 * Constructor vacio
@@ -24,19 +24,19 @@ public class Decoracio extends ItemBase {
 	 * @param name		-> nombre decoración
 	 * @param price		-> precio
 	 * @param quantity	-> cantidad
-	 * @param tipus		-> tipo de decoracion
+	 * @param material		-> tipo de decoracion
 	 */
-	public Decoracio(String name, double price, int quantity, final String tipus) {
+	public Decoracio(String name, double price, int quantity, final String material) {
 		super(name, price, quantity);
-		this.tipus = tipus;
+		this.material = material;
 	}
 	
-	public String getTipus() {
-		return this.tipus;
+	public String getMaterial() {
+		return this.material;
 	}
 	
-	public void setTipus(final String tipus) {
-		this.tipus = tipus;
+	public void setMaterial(final String material) {
+		this.material = material;
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class Decoracio extends ItemBase {
 	@Override
 	public String toString(){
 		// utilizamos Locale.ROOT para que los decimales estén con un '.' (punto), así no fastidia para guardar
-		return String.format(Locale.ROOT, "%s, %.2f, %d, %s", this.name, this.price, this.quantity, this.tipus);
+		return String.format(Locale.ROOT, "%s, %.2f, %d, %s", this.name, this.price, this.quantity, this.material);
 	}
 
 

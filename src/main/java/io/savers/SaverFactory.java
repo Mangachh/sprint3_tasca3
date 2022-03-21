@@ -21,6 +21,8 @@ public class SaverFactory {
             return new SaveTxt();
         }else if(type.equalsIgnoreCase(SaveLoad.LOADER_SQL)){
             return new SaveSql();
+        }else if(type.equalsIgnoreCase(SaveLoad.LOADER_MONGO)){
+            return new SaveMongo();
         }
         return null;
     }
@@ -35,6 +37,8 @@ public class SaverFactory {
             return new SaveTxt();
         }else if(type.equalsIgnoreCase(SaveLoad.LOADER_SQL)){
             return new SaveSql();
+        }else if(type.equalsIgnoreCase(SaveLoad.LOADER_MONGO)){
+            return new SaveMongo();
         }
         return null;
     }

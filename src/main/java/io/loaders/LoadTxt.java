@@ -244,7 +244,7 @@ public class LoadTxt implements ILoadFloristeria, ILoadTickets {
      * @param dec   -> decoracion al que setear
      */
     private void setDecoracioTipu(final String tipus, Decoracio dec) {
-        dec.setTipus(tipus.trim());
+        dec.setMaterial(tipus.trim());
     }
 
     /**

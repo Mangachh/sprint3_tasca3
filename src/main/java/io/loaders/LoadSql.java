@@ -23,29 +23,10 @@ import items.Ticket;
 
 public class LoadSql implements ILoadFloristeria, ILoadTickets {
     private SqlUtils utils;
-    private final static String DEFAULT_STR = "def";
-
-    // cosa que usamos para testear
-    /*private void test() {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cul_ampolla2", "root", "aquiles");
-            Statement statement = con.createStatement();
-            ResultSet result = statement.executeQuery("select * from adreces");
-
-            while (result.next()) {
-                System.out.println(result.getInt(1) + ", " + result.getInt(2) + ", " +
-                        result.getString(3) + ", " + result.getString(4) + " " +
-                        result.getString(5) + ", " + result.getString(6));
-            }
-            con.close();
-
-        } catch (ClassNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } 
-
-    }*/
+    public final String SQL_VIEW_STOCK = "SELECT * FROM vw_stock";
+    public final String SQL_VIEW_TICKET = "SELECT * FROM vw_ticket";
+    public final String SQL_NAME_SELECT = "SELECT tendes.nom FROM tendes";
+   
 
     public LoadSql() {
         this.utils = new SqlUtils();
@@ -53,7 +34,7 @@ public class LoadSql implements ILoadFloristeria, ILoadTickets {
 
     @Override
     public List<Ticket> loadTickets(IReadProperty reader) {
-        String ticketSelect = reader.readProperty(utils.SQL_FILE_VIEW_TICKET);
+        String ticketSelect = reader.readProperty(this.SQL_VIEW_TICKET);
         List<Ticket> tickets = null;
         try {
             Connection con = this.utils.getConnection(reader);
@@ -73,8 +54,8 @@ public class LoadSql implements ILoadFloristeria, ILoadTickets {
     @Override
     public Floristeria loadFloristeria(IReadProperty reader) {
         Floristeria floristeria = null;
-        String itemSelect = reader.readProperty(utils.SQL_FILE_VIEW_STOCK);
-        String florisSelect = reader.readProperty(utils.SQL_FILE_NAME_SELECT);
+        String itemSelect = reader.readProperty(this.SQL_VIEW_STOCK);
+        String florisSelect = reader.readProperty(this.SQL_NAME_SELECT);
 
         try {
             Connection con = utils.getConnection(reader);
@@ -185,7 +166,7 @@ public class LoadSql implements ILoadFloristeria, ILoadTickets {
 
     private Decoracio loadDecoracio(final String tipus){
         Decoracio d = new Decoracio();
-        d.setTipus(tipus);
+        d.setMaterial(tipus);
         return d;
     }
 

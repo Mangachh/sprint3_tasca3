@@ -34,14 +34,16 @@ public class SelectItemSubMenu {
         String key = "";
 
         // primero pillamos las opciones, sumamos uno para la salida, y tiramos...
-        String[] itemOptions = this.typeOptions(controller.getFloristeria());
+        String[] itemOptions = controller.getFloristeria().getKeys();
+        String[] itemsNames = null;
 
         if (itemOptions.length > 0) {
             key = this.selectKeyFromMenu(itemOptions, p);
             if (key.equals(this.TXT_NO_VALUE) == false) {
-                option = this.getItemIndex(controller.getFloristeria().getItemsFromID(key), p, showFull);
-                if(option != NO_VALUE){
-                    item = controller.getFloristeria().getIttem(key, option);
+                itemsNames = this.getItemsOptions(controller.getFloristeria().getItemsFromID(key), showFull);
+                option = this.getItemIndex(itemsNames, p);
+                if(option != NO_VALUE){                 
+                    item = controller.getFloristeria().getItemByName(key, itemsNames[option]);
                 }                
             }
         } else {
@@ -63,10 +65,27 @@ public class SelectItemSubMenu {
         p.printOptions(options);
 
         input = Input.getIntInBetween(p.MENU_OFFSET, options.length) - p.MENU_OFFSET;
-        if (input != options.length - 1) {
+        if (input != options.length) {
             key = options[input];
         }
         return key;
+    }
+
+    private String[] getItemsOptions(final List<ItemBase> items, final boolean showFull){
+        String[] itemsNames = null;
+        
+
+        // pillamos los nombres
+        ArrayList<String> names = null;
+        if(showFull){
+            names = this.fullItemsNames(items);
+        }else{
+            names = this.onlyStockItems(items);
+        }
+        names.add(TXT_EXIT);
+        itemsNames = names.toArray(new String[names.size()]);
+
+        return itemsNames;
     }
 
     /**
@@ -76,21 +95,9 @@ public class SelectItemSubMenu {
      * @param showFull  -> mostrar todos los items (true) ó sólo los que tienen stock(false)?
      * @return
      */
-    private int getItemIndex(final List<ItemBase> base, final Print p, boolean showFull) {
-        String[] itemsNames;
-        int input = this.NO_VALUE;
-
-        // pillamos los nombres
-        ArrayList<String> names = null;
-        if(showFull){
-            names = this.fullItemsNames(base);
-        }else{
-            names = this.onlyStockItems(base);
-        }
-
+    private int getItemIndex(final String[] itemsNames, final Print p) {
         //añadimos la salida y convertimos a array
-        names.add(TXT_EXIT);
-        itemsNames = names.toArray(new String[names.size()]);
+        int input = this.NO_VALUE;
         p.printOptions(itemsNames, this.COLUMNS_NUM);
         input = Input.getIntInBetween(p.MENU_OFFSET, itemsNames.length) - p.MENU_OFFSET;
 
@@ -114,25 +121,6 @@ public class SelectItemSubMenu {
         return names;
     }
 
-    /**
-     * Opciones de las keys de una floristeria. Si, por ejmeplo, sólo tenemos items Arbol y Decoració, 
-     * devolverá esas keys. De esta manera, en caso de querer meter más tipos de items no debemos
-     * tocar nada de aquí
-     * @param flor -> floristeria
-     * @return     -> keys existentes
-     */
-    private String[] typeOptions(final Floristeria flor) {
-        ArrayList<String> options = new ArrayList<String>();
-
-        for(String key: flor.getKeys()){
-            options.add(key);
-        }
-
-        //al acabar metemos el exit
-        options.add(this.TXT_EXIT);
-        String[] stringOpt = options.toArray(new String[options.size()]);
-        return stringOpt;
-    }
 
    
 

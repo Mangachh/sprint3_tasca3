@@ -72,13 +72,13 @@ public class AddItemMenu extends MenuBase{
 	private void setDecoracioData(Decoracio item, Print p) {
 		p.printLine(TXT_SEL_TIPUS);	
 		int option = -1;
-		p.printOptions(Decoracio.TIPUS_DEC);
+		p.printOptions(Decoracio.MATERIAL_DEC);
 		
-		option = Input.getIntInBetween(p.MENU_OFFSET, Decoracio.TIPUS_DEC.length);
+		option = Input.getIntInBetween(p.MENU_OFFSET, Decoracio.MATERIAL_DEC.length);
 		
 		// restamos el menu offset para cuadrar con el array
 		option -= p.MENU_OFFSET;
-		item.setTipus(Decoracio.TIPUS_DEC[option]);		
+		item.setMaterial(Decoracio.MATERIAL_DEC[option]);		
 	}
 
 
